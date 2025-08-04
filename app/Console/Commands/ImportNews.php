@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Services\RssImporter;
 
 class ImportNews extends Command
 {
@@ -11,20 +12,26 @@ class ImportNews extends Command
      *
      * @var string
      */
-    protected $signature = 'app:import-news';
+    protected $signature = 'news:import';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Import news from RSS feeds based on keywords';
 
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(RssImporter $importer)
     {
-        //
+        $this->info('Starting news import...');
+
+        $importer->import(function ($newsData) {
+           dump($newsData);
+        });
+
+        $this->info('News import completed successfully.');
     }
 }
