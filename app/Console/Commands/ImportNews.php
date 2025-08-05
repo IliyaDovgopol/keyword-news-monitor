@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Services\RssImporter;
+use App\Jobs\ImportRssJob;
 
 class ImportNews extends Command
 {
@@ -28,9 +29,7 @@ class ImportNews extends Command
     {
         $this->info('Starting news import...');
 
-        $importer->import(function ($newsData) {
-           dump($newsData);
-        });
+        ImportRssJob::dispatch();
 
         $this->info('News import completed successfully.');
     }
